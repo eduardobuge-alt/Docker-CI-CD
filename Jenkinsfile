@@ -11,7 +11,7 @@ pipeline {
 
         stage('Build Docker') {
             steps {
-                sh 'docker build -t sample-app:latest .'
+                sh 'DOCKER_BUILDKIT=0 docker build --no-cache -t sample-app:latest .'
             }
         }
 
