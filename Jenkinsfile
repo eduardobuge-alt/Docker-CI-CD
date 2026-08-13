@@ -24,8 +24,13 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh 'sleep 3'
-                sh 'curl -f http://localhost:8888'
+                sh '''
+                    sleep 3
+                    IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' sample-app-jenkins)
+                    echo "IP del contenedor: $IP"
+                    echo "Probando aplicación Flask..."
+                    curl -f http://$IP:8888
+                '''
             }
         }
     }
